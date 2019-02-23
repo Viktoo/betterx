@@ -260,6 +260,10 @@ function receivedMessage(event) {
         sendHiMessage(senderID);
         break;
 
+      case 'a14d7':
+        physicianConfirmation(senderID);
+        break;
+
       case 'image':
         requiresServerURL(sendImageMessage, [senderID]);
         break;
@@ -443,17 +447,39 @@ function sendHiMessage(recipientId) {
     },
     message: {
       text: `
-Congrats on setting up your Messenger Bot!
-
-Right now, your bot can only respond to a few words. Try out "quick reply", "typing on", "button", or "image" to see how they work. You'll find a complete list of these commands in the "app.js" file. Anything else you type will just be mirrored until you create additional commands.
-
-For more details on how to create commands, go to https://developers.facebook.com/docs/messenger-platform/reference/send-api.
+Hi, Daisy! Welcome to BetteRx - I’m here for you. Your physician should have given you a personalized ID number, what is it?
       `
     }
   }
 
   callSendAPI(messageData);
 }
+
+function physicianConfirmation(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Congrats on setting up your Messenger Bot! \n\nWe have on file Dr. John Doe \n\nYour prescriptions is _ \n\nIs this correct?",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Yes!",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_YES"
+        },
+        {
+          "content_type":"text",
+          "title":"No",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_NO"
+        }
+      ]
+    },
+  }
+
+  callSendAPI(messageData);
+}
+
 
 /*
  * Send an image using the Send API.

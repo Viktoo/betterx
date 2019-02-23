@@ -2,5 +2,5 @@
     "appSecret": "702ba138c3e1b9e930ea03fc7749e863",
     "pageAccessToken": "EAAIlLsu4wfoBAPp4Q0gaZAgTAz5TUtYhW7r47a7UugoMimoZCGEZCZCzqk2dCyhe8tpWhn13YL81lvuARHlggfuwvZANRTTSCZBkbIQw6f1mWg7DyEpfkd7UadQaeZBZA6Q7bktZCdzS2H8PaF8o2oYn4PZAUUYuHhWSFdpRQOHOUk9gZDZD",
     "validationToken": "TOKEN",
-    "serverURL": "to_be_set_manually"
+    "serverURL": "https://strange-yak-88.localtunnel.me"
 }
