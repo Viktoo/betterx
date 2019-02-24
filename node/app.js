@@ -245,7 +245,8 @@ function receivedMessage(event) {
     console.log("Quick reply for message %s with payload %s",
       messageId, quickReplyPayload);
 
-    sendTextMessage(senderID, "Quick reply tapped");
+    selectTime(senderID); //SELECT TIME TO BE REMINDED TO TAKE 
+    //sendTextMessage(senderID, "Quick reply tapped");
     return;
   }
 
@@ -257,11 +258,16 @@ function receivedMessage(event) {
     switch (messageText.replace(/[^\w\s]/gi, '').trim().toLowerCase()) {
       case 'hello':
       case 'hi':
+        sendHelloGif(senderID);
         sendHiMessage(senderID);
         break;
 
       case 'a14d7':
-        physicianConfirmation(senderID);
+        physicianConfirmation1(senderID);
+        break;
+
+      case 'g261s':
+        physicianConfirmation2(senderID);
         break;
 
       case 'image':
@@ -455,13 +461,30 @@ Hi, Daisy! Welcome to BetteRx - I’m here for you. Your physician should have g
   callSendAPI(messageData);
 }
 
-function physicianConfirmation(recipientId) {
+function sendHelloGif(recipientId) {
   var messageData = {
     recipient: {
       id: recipientId
     },
     message: {
-      text: "Congrats on setting up your Messenger Bot! \n\nWe have on file Dr. John Doe \n\nYour prescriptions is _ \n\nIs this correct?",
+      attachment: {
+        type: "image",
+        payload: {
+          url: "https://media.giphy.com/media/oOrABvrPHEdE6sxU3P/giphy.gif"
+        }
+      }
+    }
+  }
+  callSendAPI(messageData);
+}
+
+function physicianConfirmation1(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Thanks! So we have on file that your physician is Dr. Daisy Noriega at Massachusetts General Hospital in Boston, Massachusetts \n\nAnd you are prescribed to take 10mg of Fluoxetine once a day. \n\nIs this correct?",
       quick_replies: [
         {
           "content_type":"text",
@@ -480,6 +503,61 @@ function physicianConfirmation(recipientId) {
   callSendAPI(messageData);
 }
 
+function physicianConfirmation2(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Thanks! So we have on file that your physician is Dr. Viktor Makarskyy at Zuckerberg San Francisco General Hospital and Trauma Center in San Francisco, California. \n\nAnd you are prescribed to take 10mg of Diazepam once a day. \n\nIs this correct?",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Yes!",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_YES"
+        },
+        {
+          "content_type":"text",
+          "title":"No",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_NO"
+        }
+      ]
+    },
+  }
+
+  callSendAPI(messageData);
+}
+
+//Pick time when you'd like reminder for medication
+
+function selectTime(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      text: "Great! When would you like to be reminded to take your medication?",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"In the morning",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_MORNING"
+        },
+        {
+          "content_type":"text",
+          "title":"In the evening",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_EVENING"
+        },
+        {
+          "content_type":"text",
+          "title":"No thanks",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_NOTHING"
+        }
+      ]
+    }
+  };
+  callSendAPI(messageData);
+}
 
 /*
  * Send an image using the Send API.
